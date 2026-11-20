@@ -13,10 +13,13 @@ def Reidens(Ro: float, V: float, L: float, Mu: float):
     """Число рейдена"""
     return Ro * V * L / Mu
 
-def pressure_check(diam: float, height: float, L: float, Q: float, Mu = 0.1, Ro = 1300) -> list[
+def pressure_check(diam: float, height: float, Q: float, L = 6, Mu = 0.1, Ro = 1300) -> list[
     bool | float]:
     """
     Проверка потянет ли насос
+    Q - Расход выходящей смеси
+    diam - Диаметр трубки сиропа, параметризируется
+    hieght - высота трубки сиропа, параметризируется
     """
     S = count_area(diam)
     V = Q_to_V(Q / 6, S)
