@@ -1,0 +1,102 @@
+QMainWindow {
+    background-color: #0e1117;
+}
+
+QLabel#label_1, QLabel#label_2, QLabel#label_3 {
+    color: #fafafa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #262730;
+    border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+    background: #ff4b4b;
+    width: 20px;
+    height: 20px;
+    margin: -6px 0;
+    border-radius: 10px;
+}
+
+QSlider::handle:horizontal:hover {
+    background: #ff6c6c;
+}
+
+QSlider::sub-page:horizontal {
+    background: #ff4b4b;
+    border-radius: 4px;
+}
+
+QPushButton#btn_calc {
+    background-color: #ff4b4b;
+    color: #ffffff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 14px;
+    border: none;
+}
+
+QPushButton#btn_calc:hover {
+    background-color: #ff3333;
+}
+
+QPushButton#btn_calc:pressed {
+    background-color: #d93636;
+}
+
+
+QFrame#result_frame {
+    background-color: #262730;
+    border-radius: 12px;
+    border: none;
+}
+
+
+QLabel#label_status {
+    color: #ffffff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 6px 14px;
+    background-color: #546e7a;
+}
+
+QLabel#label_status[status="wait"] {
+    background-color: #546e7a;
+}
+
+QLabel#label_status[status="green"] {
+    background-color: #2e7d32;
+}
+
+QLabel#label_status[status="yellow"] {
+    background-color: #f57f17;
+}
+
+QLabel#label_status[status="red"] {
+    background-color: #c62828;
+}
+
+
+QLabel#label_main_res {
+    color: #f1c40f;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+QLabel#label_details {
+    color: #e0e6ed;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
