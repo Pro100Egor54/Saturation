@@ -219,6 +219,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.schema.update_params(flow, diam, col_h)
 
+        self.calculate()
+
     def calculate(self):
         flow = self.slider_1.value() / (3.6 * 10 ** 6)
         diam = self.slider_2.value() / 1000.0
