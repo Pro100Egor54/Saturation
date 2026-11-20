@@ -53,7 +53,7 @@ class SchemaWidget(QtWidgets.QWidget):
 
         col_x = int(w * 0.08)
         col_w = 56
-        col_h = 135
+        col_h = 180
         col_y = base_y - col_h
 
         painter.setBrush(QBrush(QColor("#238636")))
@@ -65,15 +65,13 @@ class SchemaWidget(QtWidgets.QWidget):
         painter.drawLine(col_x, col_y, col_x + col_w, col_y)
         painter.drawLine(col_x + col_w, col_y, col_x + col_w, base_y)
 
-
         painter.save()
-        painter.translate(col_x + col_w / 2 + 4, col_y + col_h / 2)
+        painter.translate(col_x + col_w / 2, col_y + col_h / 2)
         painter.rotate(-90)
         painter.setPen(QColor("#ffffff"))
-        painter.setFont(QFont("Segoe UI", 10, QFont.Bold))
-        painter.drawText(QRectF(-55, -12, 110, 24), Qt.AlignCenter, "КОЛОННА")
+        painter.setFont(QFont("Segoe UI", 8, QFont.Bold))
+        painter.drawText(QRectF(-85, -15, 170, 30), Qt.AlignCenter, "ВЫСОТА ТРУБКИ СИРОПА")
         painter.restore()
-
 
         dim_x = col_x + col_w + 18
         painter.setPen(QPen(QColor("#f1c40f"), 2))
@@ -227,58 +225,61 @@ class MainWindow(QtWidgets.QMainWindow):
         col_h = round(self.slider_3.value() / 10.0, 1)
 
         pressure = self.check_one(diam, col_h, 6, flow)
-        saturation = self.check_two(flow, diam)
+        saturation = self.check_two(flow)
         min_level = self.check_three(flow)
 
         a = []
         b = []
-        if pressure >= 0.4:
+        if pressure >= 0.3:
             a.append(2)
-            b.append(f"Насос выдержит")
-        elif pressure < 0.4 and pressure >= 0.1:
+            b.append(f"Насос выдержит. ")
+        elif pressure < 0.3 and pressure >= 0.1:
             a.append(1)
-            b.append(f"")
+            b.append(f"Насос будет работать на пределе, но справится. ")
         else:
             a.append(0)
-            b.append(f"")
+            b.append(f"Насос не сможет протолкнуть сироп в трубе, нужно купить более мощный насос. ")
 
         if saturation >= 96:
             a.append(2)
-            b.append(f"")
-        elif saturation < 96 and saturation >= 90:
+            b.append(f"Лимонад будет с достаточным количеством газа. ")
+        elif saturation < 96 and saturation >= 91:
             a.append(1)
-            b.append(f"")
+            b.append(f"Лимонад будет немного не догазирован. ")
         else:
             a.append(0)
-            b.append(f"")
+            b.append(f"Лимонад будет не догазирован, нужно уменьшить расход лимонада либо увеличить высоту колонны газирования. ")
 
         #0.08 М
 
         if min_level <= 0.04:
             a.append(2)
-            b.append(f"")
+            b.append(f"Бак розлива подходит для этих параметров. ")
         elif min_level > 0.04 and min_level <= 0.07:
             a.append(1)
-            b.append(f"")
+            b.append(f"Бак розлива будет близок к переполнению, но все будет в порядке. ")
         else:
             a.append(0)
-            b.append(f"")
+            b.append(f"Лимонад будет переливаться через края, нужно купить более высокий бак розлива. ")
+
+
 
         can_work = min(a)
 
         if can_work == 2:
             self.set_status("green", "ПАРАМЕТРЫ В НОРМЕ")
-        elif can_work == 0:
-            self.set_status("yellow", "ЕСТЬ РИСК")
+        elif can_work == 1:
+            self.set_status("yellow", "РАБОТА НЕ ЖЕЛАТЕЛЬНА")
         else:
             self.set_status("red", "РАБОТАТЬ НЕЛЬЗЯ")
 
 
 
-        self.label_main_res.setText(f"Насыщение газом: % — ГОДИТСЯ")
+        self.label_main_res.setText(f"Насыщение газом: {round(saturation, 4)}%")
         self.label_details.setText(
-            f"Остаточное давление в норме: {pressure[1]} бар (запас достаточный)\n"
-            f"Минимальный уровень жидкости в баке розлива что бы не было пены: {min_level} м"
+            f"Остаточное давление: {round(pressure, 2)} бар\n" +
+            f"Минимальный уровень жидкости в баке розлива что бы не было пены: {round(min_level * 1000, 2)} мм\n" +
+            f"Рекомендации: {b[0]}{b[1]}{b[2]}"
         )
 
         #
